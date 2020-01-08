@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <p>Hello</p>
+        <h1>{{.Day}}</h1>
+<ul>
+    {{range .Todos}}
+        {{if .Complete}}
+            <li style="background-color: green;font-size: large;">{{.TaskName}}</li>
+        {{else}}
+            <li style="background-color: red;font-size: large;">{{.TaskName}}</li>
+        {{end}}
+    {{end}}
+</ul>
     </body>
 
 

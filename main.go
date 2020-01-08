@@ -3,28 +3,40 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"github.com/gorilla/mux"
-	//"html/template"
-	"path"
-	"log"
+
+	//"github.com/gorilla/mux"
+	"html/template"
 )
 
-func serveWebpage() {
-	router := mux.NewRouter()
-	router.HandleFunc("/tasks", serveHome)
-
-	log.Fatal(http.ListenAndServe(":8080", router))
-
+type todo struct {
+	TaskName string
+	Complete bool
 }
 
-func serveHome(w http.ResponseWriter, r *http.Request) {
-	filepath := path.Dir(`C:\Users\Jack\Desktop\Go\src\taskschedulerdashboard\html\tasks.html`)
-    w.Header().Set("Content-type", "text/html")
-    http.ServeFile(w, r, filepath)
+type tasks struct {
+	Day   string
+	Todos []todo
+}
+
+func createTemplate() {
+	template := template.Must(template.ParseFiles(`html\tasks.html`))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		myTasks := tasks{
+			Day: "Wednesday",
+			Todos: []todo{
+				{TaskName: "Golang task dashboard.", Complete: false},
+				{TaskName: "Eat breakfast.", Complete: true},
+				{TaskName: "Finish first driving lesson.", Complete: true},
+			},
+		}
+		template.Execute(w, myTasks)
+	})
+
+	http.ListenAndServe(":8080", nil)
 }
 
 func main() {
-	fmt.Print("Starting server...")
-	serveWebpage()
+	fmt.Println("Starting server...")
+	createTemplate()
 
 }

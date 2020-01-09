@@ -12,16 +12,16 @@ type todo struct {
 }
 
 type tasks struct {
-	Day   string
-	Todos []todo
+	Day             string
+	Todos           []todo
 }
 
 func createTemplate() {
 	myTasks := tasks{
-		Day: "Wednesday",
+		Day:             "Wednesday",
 		Todos: []todo{
-			{TaskName: "Golang task dashboard.", Complete: false},
-			{TaskName: "Eat breakfast.", Complete: true},
+			{TaskName: "Golang task dashboard.", Complete: true},
+			{TaskName: "Eat breakfast.", Complete: false},
 			{TaskName: "Finish first driving lesson.", Complete: true},
 		},
 	}

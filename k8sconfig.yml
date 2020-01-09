@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment # Type of K8s resource
+metadata:
+  name: go-k8s # Name of the K8s resource
+spec:
+  replicas: 3 # The min number of pods to run at a time
+  selector:
+    matchLabels:
+      app: go-k8s
+    template:
+      metadata:
+        labels:
+          app: go-k8s
+        spec:
+          containers:
+            - name: go-k8s
+              image: jdockerty/go-k8s:1.0
+              imagePullPolicy: IfNotPresent
+              ports:
+                - containerPort: 8081 # Port that Go app opens.
+        livenessProbe:           # To check the health of the Pod
+          httpGet:
+            path: /
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 15
+          timeoutSeconds: 5
+        readinessProbe:          # To check if the Pod is ready to serve traffic or not
+          httpGet:
+            path: /
+            port: 8081
+            scheme: HTTP
+          initialDelaySeconds: 5
+          timeoutSeconds: 1    

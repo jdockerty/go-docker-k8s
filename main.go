@@ -19,17 +19,6 @@ type tasks struct {
 	Todos []todo
 }
 
-func runCommand(command, args string) {
-	cmd := exec.Command(command, args)
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	err := cmd.Run()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Print(out.String(), "\n")
-}
-
 func createTemplate() {
 	myTasks := tasks{
 		Day: "Wednesday",
@@ -40,7 +29,7 @@ func createTemplate() {
 		},
 	}
 
-	template := template.Must(template.ParseFiles(`tasks.html`))
+	template := template.Must(template.ParseFiles(`html\tasks.html`))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		template.Execute(w, myTasks)
 	})
@@ -48,7 +37,6 @@ func createTemplate() {
 }
 
 func main() {
-	//runCommand("ls", "")
 	fmt.Println("Starting server...")
 	createTemplate()
 }

@@ -1,6 +1,6 @@
 # Task Scheduler Dashboard
 
-Small personal project for using Golang, Docker, and Kubernetes. Inspired by [this](https://www.callicoder.com/deploy-containerized-go-app-kubernetes/)
+Small personal project for using Golang, Docker, and Kubernetes. Tutorial by [callicoder](https://www.callicoder.com/deploy-containerized-go-app-kubernetes/)
 
 ### Notes
 

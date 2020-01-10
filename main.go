@@ -1,12 +1,9 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
-	"os/exec"
 )
 
 type todo struct {
@@ -29,11 +26,11 @@ func createTemplate() {
 		},
 	}
 
-	template := template.Must(template.ParseFiles(`html\tasks.html`))
+	template := template.Must(template.ParseFiles(`tasks.html`))
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		template.Execute(w, myTasks)
 	})
-	http.ListenAndServe(":8081", nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func main() {

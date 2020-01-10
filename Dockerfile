@@ -20,7 +20,7 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 
 # Copies build from previous stage 
-COPY --from=builder /app/main /app/html/* .
+COPY --from=builder /app/main /app/html ./
 
 # Expose port 8080
 EXPOSE 8080

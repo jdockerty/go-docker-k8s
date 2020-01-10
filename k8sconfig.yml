@@ -1,36 +1,49 @@
 ---
-apiVersion: apps/v1
-kind: Deployment # Type of K8s resource
-metadata:
-  name: go-k8s # Name of the K8s resource
-spec:
-  replicas: 3 # The min number of pods to run at a time
-  selector:
-    matchLabels:
-      app: go-k8s
-    template:
+  apiVersion: apps/v1
+  kind: Deployment                 # Type of Kubernetes resource
+  metadata:
+    name: gokubedash           # Name of the Kubernetes resource
+  spec:
+    replicas: 3                    # Number of pods to run at any given time
+    selector:
+      matchLabels:
+        app: go-k8s        # This deployment applies to any Pods matching the specified label
+    template:                      # This deployment will create a set of pods using the configurations in this template
       metadata:
-        labels:
-          app: go-k8s
-        spec:
-          containers:
-            - name: go-k8s
-              image: jdockerty/go-k8s:1.0
-              imagePullPolicy: IfNotPresent
-              ports:
-                - containerPort: 8081 # Port that Go app opens.
-        livenessProbe:           # To check the health of the Pod
-          httpGet:
-            path: /
-            port: 8081
-            scheme: HTTP
-          initialDelaySeconds: 5
-          periodSeconds: 15
-          timeoutSeconds: 5
-        readinessProbe:          # To check if the Pod is ready to serve traffic or not
-          httpGet:
-            path: /
-            port: 8081
-            scheme: HTTP
-          initialDelaySeconds: 5
-          timeoutSeconds: 1    
+        labels:                    # The labels that will be applied to all of the pods in this deployment
+          app: go-k8s 
+      spec:                        # Spec for the container which will run in the Pod
+        containers:
+        - name: go-k8s
+          image: jdockerty/go-k8s:1.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081  # Should match the port number that the Go application listens on
+          livenessProbe:           # To check the health of the Pod
+            httpGet:
+              path: /
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:          # To check if the Pod is ready to serve traffic or not
+            httpGet:
+              path: /
+              port: 8081
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 1    
+---
+apiVersion: v1
+kind: Service                    # Type of kubernetes resource
+metadata:
+  name: gokubedash-service   # Name of the resource
+spec:
+  type: NodePort                 # A port is opened on each node in your cluster via Kube proxy.
+  ports:                         # Take incoming HTTP requests on port 9090 and forward them to the targetPort of 8080
+  - name: http
+    port: 9090
+    targetPort: 8080
+  selector:
+    app: go-k8s         # Map any pod with label `app=go-hello-world` to this service

@@ -10,12 +10,11 @@ Dockerfile is commented to provide explanation of each layer.
 
 Starting with the command `docker build -t gokubedash .`  
 
-This builds the image using the Dockerfile, whilst tagging it as _'gokubedash'_, everything from the current directory, which is not part of the .dockerignore, is included in the image.
-
-_(This may not have been entirely necessary upon reflection, as you can add multiple tags in the previous step.)_  
+This builds the image using the Dockerfile, whilst tagging it as _'gokubedash'_, everything from the current directory, which is not part of the .dockerignore, is included in the image. 
 
 
-The resulting image was then tagged with _jdockerty/gokubedash:1.1_ as this provides the _jdockerty/_ namespace in a DockerHub. `docker tag gokubedash jdockerty/gokubedash:1.1`  
+The resulting image was then tagged with _jdockerty/gokubedash:1.1_ as this provides the _jdockerty/_ namespace in a DockerHub. _(This may not have been entirely necessary upon reflection, as you can add multiple tags in the previous step.)_   
+`docker tag gokubedash jdockerty/gokubedash:1.1`  
 
 
 The image was then run as a container to test that it was functioning properly. This maps the localhost (127.0.0.1) port 8080, to the port which is exposed from the container, which is also 8080. `docker run -p 127.0.0.1:8080:8080 gokubedash`

@@ -38,6 +38,7 @@ The pods can also be seen using the command `kubectl get pods`.
 ![Get pods K8s command](https://github.com/jdockerty/taskschedulerdashboard/blob/master/k8simages/get%20pods.png)
 
 Since the pods within the cluster cannot be accessed from outside, by default, we must port-forward one of the pods to test it is working. `kubectl port-forward gokubedash-6bf64bdc89-4r89s 8080:8080`
+
 ![Port forwarding K8s](https://github.com/jdockerty/taskschedulerdashboard/blob/master/k8simages/port%20forward.png)
 
 We can then visit localhost:8080 to test whether it is working properly.
